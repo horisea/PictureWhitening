@@ -65,7 +65,7 @@
 
 /// 灰色头像
 - (IBAction)graryBtnClick:(id)sender {
-    self.photoImageVIew.image = [HImageUtility imageToGrary:@"456"];// 使用UIKit
+    self.photoImageVIew.image = [HImageUtility imageToGraryWithImageName:@"456"];// 使用UIKit
 }
 
 #pragma mark - lazy

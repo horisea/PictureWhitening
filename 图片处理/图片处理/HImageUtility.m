@@ -15,24 +15,30 @@
 /// 美白
 + (UIImage *)whiteImageWithName:(NSString *)imageName  Whiteness:(int)whiteness {
 
+    return [HImageUtility whiteImage:[UIImage imageNamed:imageName] Whiteness:whiteness];
+}
+
++ (UIImage *)whiteImage:(UIImage *)image
+              Whiteness:(int)whiteness {
+    
     if (!whiteness || whiteness < 10 ||  whiteness > 150) {
-        return [UIImage imageNamed:imageName];
+        return image;
     }
     
     // 1.拿到图片，获取宽高
-    CGImageRef imageRef = [UIImage imageNamed:imageName].CGImage;
+    CGImageRef imageRef =image.CGImage;
     NSInteger width = CGImageGetWidth(imageRef);
     NSInteger height = CGImageGetHeight(imageRef);
     
     // 2:创建颜色空间（灰色空间， 彩色空间）->  开辟一块内存空间
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-
+    
     
     // 3:创建图片上下文
     // 为什么是UInt32类型，即是无符号32为int型 取值范围就是0-255之间
     // inputPixels是像素点集合的首地址
     UInt32 * inputPixels = (UInt32*)calloc(width * height, sizeof(UInt32));
-
+    
     CGContextRef contextRef = CGBitmapContextCreate(inputPixels,
                                                     width,
                                                     height,
@@ -81,8 +87,8 @@
     free(inputPixels);
     
     return newImage;
+    
 }
-
 /////////////////////////////////////图片磨皮//////////////////////////////////////////////////////////
 + (UIImage *)dermabrasionImage:(UIImage *)image  touch:(UITouch *)touch view:(UIView *)view {
     int whiteness = 20; // 越大美白月明显
@@ -164,9 +170,15 @@
 
 
 /////////////////////////////////////灰色头像//////////////////////////////////////////////////////////
-+ (UIImage *)imageToGrary:(NSString *)imageName {
+
++ (UIImage *)imageToGraryWithImageName:(NSString *)imageName {
+    return [HImageUtility imageToGraryWithImage:[UIImage imageNamed:imageName]];
+}
+
+
++ (UIImage *)imageToGraryWithImage:(UIImage *)image {
     // 1.拿到图片，获取宽高
-    CGImageRef imageRef = [UIImage imageNamed:imageName].CGImage;
+    CGImageRef imageRef = image.CGImage;
     NSInteger width = CGImageGetWidth(imageRef);
     NSInteger height = CGImageGetHeight(imageRef);
     
@@ -181,9 +193,9 @@
                                                     colorSpaceRef,
                                                     kCGImageAlphaNone); // 无透明度
     if (!contextRef) {
-        return [UIImage imageNamed:imageName];
+        return image;
     }
- 
+    
     CGContextDrawImage(contextRef, CGRectMake(0, 0, width, height), imageRef);
     
     CGImageRef grayImageRef = CGBitmapContextCreateImage(contextRef);
@@ -195,5 +207,168 @@
     return graryImage;
 }
 
+/////////////////////////////////////图片合成//////////////////////////////////////////////////////////
++ (UIImage *)composeImageWithArray:(NSArray<UIImage *> *)imageArray frameArray:(NSArray *)frameArray {
+    if (imageArray.count == 0) {  return nil;  }
+    if (imageArray.count == 1) {  return imageArray.firstObject;  }
+    if (imageArray.count != frameArray.count) {  return nil;  }
+    
+    __block UIImage *image0;
+    [imageArray enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.size.width == 0) {
+            *stop = YES;
+            image0 = idx == 0 ? obj : [imageArray objectAtIndex:idx - 1];
+        }
+    }];
+    if (image0) {
+        return image0;
+    }
+    
+    NSMutableArray *arrayImages = imageArray.mutableCopy;
+    NSMutableArray *arrayFrames = frameArray.mutableCopy;
+    
+    NSString *string = arrayFrames.firstObject;
+    CGRect fristRect = CGRectFromString(string);
+    UIImage *img0 = arrayImages.firstObject;
+    CGFloat w0 = fristRect.size.width;
+    CGFloat h0 = fristRect.size.height;
+    // 以第一张的图大小为画布创建上下文
+    UIGraphicsBeginImageContext(CGSizeMake(w0, h0));
+    [img0 drawInRect:CGRectMake(0, 0, w0, h0)];// 先把第一张图片 画到上下文中
+    
+    
+    for (int i = 1; i < arrayImages.count; i ++) {
+        NSString *string2 = [arrayFrames objectAtIndex:i];
+        CGRect secondRect = CGRectFromString(string2);
+        UIImage *img1 = [arrayImages objectAtIndex:1];
+        [img1 drawInRect:secondRect];// 再把小图放在上下文中
+    }
+    
+    UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();// 从当前上下文中获得最终图片
+    UIGraphicsEndImageContext();// 关闭上下文
+    return resultImg;
+}
+
++ (UIImage *)composeImageOnMainImage:(UIImage *)mainImage
+                  mainImageViewFrame:(CGRect)viewFrame
+                       subImageArray:(NSArray *)imgArray
+                  subImageFrameArray:(NSArray *)frameArray {
+    if (!mainImage) {   return nil; }
+    if (viewFrame.size.width == 0 || viewFrame.size.height == 0) {   return nil; }
+    if (imgArray.count == 0) {  return nil;  }
+    if (imgArray.count == 1) {  return imgArray.firstObject;  }
+    if (imgArray.count != frameArray.count) {  return nil;  }
+    
+    // 此处拿到缩放比例
+    CGFloat widthScale = mainImage.size.width / viewFrame.size.width;
+    CGFloat heightScale = mainImage.size.height / viewFrame.size.height;
+
+    UIGraphicsBeginImageContext(CGSizeMake(mainImage.size.width, mainImage.size.height));
+    [mainImage drawInRect:CGRectMake(0, 0, mainImage.size.width, mainImage.size.height)];
+    int i = 0;
+    for (UIImage *img in imgArray) {
+        NSString *string = [frameArray objectAtIndex:i];
+        CGRect fristRect = CGRectFromString(string);
+        [img drawInRect:CGRectMake(fristRect.origin.x * widthScale, fristRect.origin.y * heightScale, fristRect.size.width, fristRect.size.height)];
+        i+=1;
+    }
+    
+    UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+        return resultImg == nil ? mainImage : resultImg;
+}
+
+
+
+/////////////////////////////////////图片旋转//////////////////////////////////////////////////////////
++ (UIImage *)image:(UIImage *)image rotation:(UIImageOrientation)orientation
+{
+    long double rotate = 0.0;
+    CGRect rect;
+    float translateX = 0;
+    float translateY = 0;
+    float scaleX = 1.0;
+    float scaleY = 1.0;
+    
+    switch (orientation) {
+        case UIImageOrientationLeft:
+            rotate = M_PI_2;
+            rect = CGRectMake(0, 0, image.size.height, image.size.width);
+            translateX = 0;
+            translateY = -rect.size.width;
+            scaleY = rect.size.width/rect.size.height;
+            scaleX = rect.size.height/rect.size.width;
+            break;
+        case UIImageOrientationRight:
+            rotate = 33 * M_PI_2;
+            rect = CGRectMake(0, 0, image.size.height, image.size.width);
+            translateX = -rect.size.height;
+            translateY = 0;
+            scaleY = rect.size.width/rect.size.height;
+            scaleX = rect.size.height/rect.size.width;
+            break;
+        case UIImageOrientationDown:
+            rotate = M_PI;
+            rect = CGRectMake(0, 0, image.size.width, image.size.height);
+            translateX = -rect.size.width;
+            translateY = -rect.size.height;
+            break;
+        default:
+            rotate = 0.0;
+            rect = CGRectMake(0, 0, image.size.width, image.size.height);
+            translateX = 0;
+            translateY = 0;
+            break;
+    }
+    
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    //做CTM变换
+    CGContextTranslateCTM(context, 0.0, rect.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextRotateCTM(context, rotate);
+    CGContextTranslateCTM(context, translateX, translateY);
+    
+    CGContextScaleCTM(context, scaleX, scaleY);
+    //绘制图片
+    CGContextDrawImage(context, CGRectMake(0, 0, rect.size.width, rect.size.height), image.CGImage);
+    
+    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
+    
+    return newPic;
+}
+
+
+
+//////////////////////////////////////图片合成文字//////////////////////////////////////////////
+
+
++ (UIImage *)imageWithText:(NSString *)text
+                  textFont:(NSInteger)fontSize
+                 textColor:(UIColor *)textColor
+                 textFrame:(CGRect)textFrame
+               originImage:(UIImage *)image
+    imageLocationViewFrame:(CGRect)viewFrame {
+    
+    if (!text)      {  return image;   }
+    if (!fontSize)  {  fontSize = 17;   }
+    if (!textColor) {  textColor = [UIColor blackColor];   }
+    if (!image)     {  return nil;  }
+    if (viewFrame.size.height==0 || viewFrame.size.width==0 || textFrame.size.width==0 || textFrame.size.height==0 ){return nil;}
+
+    NSString *mark = text;
+//    CGFloat w = image.size.width;
+//    CGFloat h = image.size.height;
+    UIGraphicsBeginImageContext(viewFrame.size);
+    [image drawInRect:viewFrame];
+    NSDictionary *attr = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:fontSize], NSForegroundColorAttributeName : textColor };
+    //位置显示
+    [mark drawInRect:viewFrame withAttributes:attr];
+    
+    UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return aimg;
+}
 
 @end
