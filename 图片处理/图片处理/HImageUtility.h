@@ -61,7 +61,7 @@
                         frameArray:(NSArray *)frameArray;
 
 /**
- *  return 合成后的图片 (以坐标为参考点，不准确)
+ *  return 合成后的图片 (以坐标为参考点，准确)
  *  @param mainImage        第一张图片位画布                          （必传，不可空）
  *  @param viewFrame        第一张图片所在View的frame（获取压缩比用）    （必传，不可空）
  *  @param imgArray         子图片数组                               （必传，不可空）
