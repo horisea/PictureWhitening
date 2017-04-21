@@ -68,11 +68,40 @@
     self.photoImageVIew.image = [HImageUtility imageToGraryWithImageName:@"456"];// 使用UIKit
 }
 
+
+/// 图片上加文字
+- (IBAction)addTextBtnClick:(id)sender {
+    self.photoImageVIew.image = [HImageUtility imageWithText:@"这个人是唐嫣吗，我的女神小糖糖。。。。。。。。哈哈哈哈哈。。我要看见描述小糖糖的文字，每个文字都不一样的 。"
+                                                     textFont:17
+                                                    textColor:[UIColor cyanColor]
+                                                    textFrame:CGRectMake(20, 30, 200, 20)
+                                                  originImage:self.photoImageVIew.image
+                                       imageLocationViewFrame:self.photoImageVIew.frame];
+}
+
+/// 四张图片合成一张
+- (IBAction)composeImageBtnClick:(id)sender {
+    self.photoImageVIew.image = [HImageUtility composeImageOnMainImage:[UIImage imageNamed:@"456"]
+                                                    mainImageViewFrame:self.photoImageVIew.frame
+                                                         subImageArray:@[[UIImage imageNamed:@"1"],
+                                                                         [UIImage imageNamed:@"2"],
+                                                                         [UIImage imageNamed:@"2"]]
+                                                    subImageFrameArray:@[NSStringFromCGRect(CGRectMake(30, 120, 60, 60)),
+                                                                         NSStringFromCGRect(CGRectMake(0, 30, 60, 60)),
+                                                                         NSStringFromCGRect(CGRectMake(140, 180, 60, 60))]];
+    
+}
+
+/// 图片旋转
+- (IBAction)rotationBtnClick:(id)sender {
+    self.photoImageVIew.image = [HImageUtility image:self.photoImageVIew.image rotation:UIImageOrientationDown];
+}
+
 #pragma mark - lazy
 - (UIImageView *)photoImageVIew{
     if (!_photoImageVIew) {
-        CGFloat leftMargin = 55;
-        _photoImageVIew = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, 30, ScreenWidth - 2 * leftMargin, 450)];
+        CGFloat leftMargin = 65;
+        _photoImageVIew = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, 30, ScreenWidth - 2 * leftMargin, 400)];
         _photoImageVIew.userInteractionEnabled = YES;
         _photoImageVIew.image = [UIImage imageNamed:@"456"];
     }

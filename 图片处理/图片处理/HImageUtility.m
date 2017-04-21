@@ -8,6 +8,7 @@
 
 #import "HImageUtility.h"
 #import "ColorUtils.h"
+#import "NSString+StringSize.h"
 
 @implementation HImageUtility
 /////////////////////////////////////为了每个模块容易理解   代码不封装了//////////////////////////////////////////////////////////
@@ -358,13 +359,18 @@
     if (viewFrame.size.height==0 || viewFrame.size.width==0 || textFrame.size.width==0 || textFrame.size.height==0 ){return nil;}
 
     NSString *mark = text;
+    CGFloat height = [mark sizeWithPreferWidth:textFrame.size.width font:[UIFont systemFontOfSize:fontSize]].height; // 此分类方法要导入头文件
+    if ((height + textFrame.origin.y) > viewFrame.size.height) { // 文字高度超出父视图的宽度
+        height = viewFrame.size.height - textFrame.origin.y;
+    }
+    
 //    CGFloat w = image.size.width;
 //    CGFloat h = image.size.height;
     UIGraphicsBeginImageContext(viewFrame.size);
-    [image drawInRect:viewFrame];
-    NSDictionary *attr = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:fontSize], NSForegroundColorAttributeName : textColor };
+    [image drawInRect:CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height)];
+    NSDictionary *attr = @{NSFontAttributeName: [UIFont systemFontOfSize:fontSize], NSForegroundColorAttributeName : textColor };
     //位置显示
-    [mark drawInRect:viewFrame withAttributes:attr];
+    [mark drawInRect:CGRectMake(textFrame.origin.x, textFrame.origin.y, textFrame.size.width, height) withAttributes:attr];
     
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

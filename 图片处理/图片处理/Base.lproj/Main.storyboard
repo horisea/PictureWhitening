@@ -22,16 +22,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yfe-he-702">
-                                <rect key="frame" x="45" y="495" width="70" height="37"/>
+                                <rect key="frame" x="67" y="450" width="237" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="还原"/>
+                                <state key="normal" title="查看其他效果先点击还原"/>
                                 <connections>
                                     <action selector="reductionBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oMc-jN-WWI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3n-1J-PfI">
-                                <rect key="frame" x="45" y="540" width="70" height="37"/>
+                                <rect key="frame" x="45" y="495" width="70" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="磨皮美白"/>
@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNP-8F-OJt">
-                                <rect key="frame" x="45" y="585" width="70" height="37"/>
+                                <rect key="frame" x="45" y="533" width="70" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="灰色头像"/>
@@ -49,7 +49,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wkr-wE-jG8">
-                                <rect key="frame" x="254" y="540" width="65" height="37"/>
+                                <rect key="frame" x="251" y="533" width="71" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="超级美白"/>
@@ -66,13 +66,40 @@
                                     <action selector="whiteSkinClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Shn-Wk-LMd"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnq-eO-lr8">
+                                <rect key="frame" x="150" y="533" width="70" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="加文字"/>
+                                <connections>
+                                    <action selector="addTextBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vze-mc-y0P"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E35-Dz-nlv">
+                                <rect key="frame" x="150" y="495" width="70" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="图片合成"/>
+                                <connections>
+                                    <action selector="composeImageBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jQs-Ao-JUc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e9F-yV-bqw">
+                                <rect key="frame" x="45" y="571" width="70" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.11295057159999999" green="1" blue="0.4014320743" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="图片旋转"/>
+                                <connections>
+                                    <action selector="rotationBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6YL-yL-vDo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-198" y="-127"/>
+            <point key="canvasLocation" x="-199.19999999999999" y="-127.28635682158921"/>
         </scene>
     </scenes>
 </document>

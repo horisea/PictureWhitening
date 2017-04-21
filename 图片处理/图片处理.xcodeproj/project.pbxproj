@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1AB43291EAA09A900130763 /* NSString+StringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AB43281EAA09A900130763 /* NSString+StringSize.m */; };
 		E1CCF8141EA0C8D8001FC70D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CCF8131EA0C8D8001FC70D /* main.m */; };
 		E1CCF8171EA0C8D8001FC70D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CCF8161EA0C8D8001FC70D /* AppDelegate.m */; };
 		E1CCF81A1EA0C8D8001FC70D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CCF8191EA0C8D8001FC70D /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1AB43271EAA09A900130763 /* NSString+StringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringSize.h"; sourceTree = "<group>"; };
+		E1AB43281EAA09A900130763 /* NSString+StringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringSize.m"; sourceTree = "<group>"; };
 		E1CCF80F1EA0C8D8001FC70D /* 图片处理.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "图片处理.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1CCF8131EA0C8D8001FC70D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E1CCF8151EA0C8D8001FC70D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "图片处理/AppDelegate.h"; sourceTree = "<group>"; };
@@ -70,6 +73,8 @@
 				E1CCF8291EA0C928001FC70D /* ColorUtils.h */,
 				E1CCF82A1EA0C928001FC70D /* HImageUtility.h */,
 				E1CCF82B1EA0C928001FC70D /* HImageUtility.m */,
+				E1AB43271EAA09A900130763 /* NSString+StringSize.h */,
+				E1AB43281EAA09A900130763 /* NSString+StringSize.m */,
 				E1CCF8121EA0C8D8001FC70D /* Supporting Files */,
 			);
 			path = "图片处理";
@@ -160,6 +165,7 @@
 			files = (
 				E1CCF81A1EA0C8D8001FC70D /* ViewController.m in Sources */,
 				E1CCF82C1EA0C928001FC70D /* HImageUtility.m in Sources */,
+				E1AB43291EAA09A900130763 /* NSString+StringSize.m in Sources */,
 				E1CCF8171EA0C8D8001FC70D /* AppDelegate.m in Sources */,
 				E1CCF8141EA0C8D8001FC70D /* main.m in Sources */,
 			);
